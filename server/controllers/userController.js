@@ -28,7 +28,7 @@ const createUser = async (req, res, next) => {
 };
 
 //get all users
-const getUsers = async (req, res) => {
+const getUsers = async (req, res, next) => {
   try {
     const users = await User.find({});
 
@@ -42,7 +42,7 @@ const getUsers = async (req, res) => {
 };
 
 //get user by id
-const getUserById = async (req, res) => {
+const getUserById = async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -57,39 +57,9 @@ const getUserById = async (req, res) => {
   }
 };
 
-//user can replace image
-// const updateUser = async (req, res) => {
-//   const { username } = req.body;
-//   const { name } = req.params;
-//   const { filename } = req.file;
-
-//   try {
-//     let user = await User.findOne({ username });
-
-//     await unlinkAsync(`public\\images\\${name}`);
-
-//     const imgs = user.images.filter((file) => file !== name);
-
-//     imgs.push(filename);
-
-//     await User.findOneAndUpdate({ username }, { $set: { images: imgs } });
-//     user = await User.findOne({ username });
-
-//     res.status(200).json({
-//       success: true,
-//       filename,
-//     });
-//   } catch (err) {
-//     console.log(err.message);
-
-//     res.status(500).json({
-//       error: err.message,
-//     });
-//   }
-// };
 
 // upload more images -- user
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
   const { id } = req.params;
 
   const imgs = req.files.map((file) => file.filename);
@@ -112,7 +82,7 @@ const updateUser = async (req, res) => {
 };
 
 //delete image
-const deleteImage = async (req, res) => {
+const deleteImage = async (req, res, next) => {
   const { id } = req.params;
   const { name } = req.query;
 
@@ -140,7 +110,7 @@ const deleteImage = async (req, res) => {
 };
 
 //get all images
-const getImages = async (req, res) => {
+const getImages = async (req, res, next) => {
   const { username } = req.body;
   try {
     const user = await User.findOne({ username });
